@@ -53,9 +53,9 @@ macro(build_pybind11)
   list(APPEND extra_cmake_args "-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}")
 
   include(ExternalProject)
-  ExternalProject_Add(pybind11-2.9.1
+  ExternalProject_Add(pybind11-2.9.2
     GIT_REPOSITORY https://github.com/pybind/pybind11.git
-    GIT_TAG ffa346860b306c9bbfb341aed9c14c067751feb8  # v2.9.1
+    GIT_TAG 914c06fb252b6cc3727d0eedab6736e88a3fcb01  # v2.9.2
     GIT_CONFIG advice.detachedHead=false
     # Suppress git update due to https://gitlab.kitware.com/cmake/cmake/-/issues/16419
     # See https://github.com/ament/uncrustify_vendor/pull/22 for details
@@ -72,9 +72,6 @@ macro(build_pybind11)
     # definitions for Py_DEBUG, which MSVC complains about.  This patch switches
     # the internal pybind11 variable to be called PYBIND11_DEBUG, which avoids
     # the issue.
-    PATCH_COMMAND
-      ${CMAKE_COMMAND} -E chdir <SOURCE_DIR> git apply -p1 --ignore-space-change --whitespace=nowarn
-        ${CMAKE_CURRENT_SOURCE_DIR}/pybind11-2.9.1-fix-windows-debug.patch
   )
 
   # The external project will install to the build folder, but we'll install that on make install.
